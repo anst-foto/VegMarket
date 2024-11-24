@@ -1,0 +1,66 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:VegMarket.Desktop.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="VegMarket.Desktop.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="VegMarket.Desktop">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <SplitView IsPaneOpen="{Binding IsPaneOpen}"
+               OpenPaneLength="200"
+               CompactPaneLength="48"
+               DisplayMode="CompactInline"
+               Background="LightGreen"
+               PaneBackground="LightSeaGreen">
+        <SplitView.Pane>
+            <StackPanel>
+                <Button Command="{Binding TogglePane}">
+                    <PathIcon Data="{StaticResource LineHorizontal3Regular}"/>
+                </Button>
+            
+                <ListBox ItemsSource="{Binding TogglePaneItems}"
+                         SelectedItem="{Binding SelectedTogglePaneItem}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:TogglePaneItemTemplate}">
+                            <StackPanel Spacing="15" 
+                                        Orientation="Horizontal">
+                                <PathIcon Data="{Binding Icon}"/>
+                                <TextBlock Text="{Binding Title}"/>
+                            </StackPanel>
+                            
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </SplitView.Pane>
+        
+        <SplitView.Content>
+            <DockPanel LastChildFill="True">
+                <StackPanel Orientation="Horizontal"
+                            Background="Yellow"
+                            DockPanel.Dock="Top">
+                    <TextBlock Text="Выбранная страница:"
+                               FontSize="24"
+                               Margin="10"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding TitlePage}"
+                               FontSize="24"
+                               Margin="10"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+                
+                <TransitioningContentControl Content="{Binding CurrentPage}"/>
+            </DockPanel>
+        </SplitView.Content>
+    </SplitView>
+
+</Window>

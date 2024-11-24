@@ -1,0 +1,6 @@
+@VegMarket.API_HostAddress = https://localhost:7201
+
+GET {{VegMarket.API_HostAddress}}/products/
+Accept: application/json
+
+###
